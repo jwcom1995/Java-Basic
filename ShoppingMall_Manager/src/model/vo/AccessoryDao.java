@@ -10,22 +10,21 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-public class BottomDao {
-	private HashMap<String,Bottom> BottomStock = new HashMap<>();
-	private String pNum="000000";
+public class AccessoryDao {
+	private HashMap<String,Accessory> AcsryStock = new HashMap<>();
 	public void setData() {
 		BufferedReader br = null;
 		
 		try {
-			br=new BufferedReader(new FileReader("BottomDB.txt"));
+			br=new BufferedReader(new FileReader("AccessoryDB.txt"));
 		
 			String tmp=null;
 			while((tmp=br.readLine())!=null) {
 				String temp = tmp.substring(1, tmp.length()-1);
 				
 				String[] product = temp.split(",");
-				Bottom b = new Bottom(product[0],product[1],product[2],Integer.parseInt(product[3]),Integer.parseInt(product[4]),product[5],product[6]);
-				BottomStock.put(product[0], b);
+				Accessory ac = new Accessory(product[0],product[1],product[2],Integer.parseInt(product[3]),Integer.parseInt(product[4]));
+				AcsryStock.put(product[0], ac);
 			}
 			
 		} catch (FileNotFoundException e) {
@@ -46,10 +45,10 @@ public class BottomDao {
 		
 		BufferedWriter bw = null;
 		try {
-			bw=new BufferedWriter(new FileWriter("BottomDB.txt",true));
+			bw=new BufferedWriter(new FileWriter("AccessoryDB.txt",true));
 			bw.write("["+topData[0]+","+topData[1]+","+topData[2]+","+topData[3]+","+topData[4]+","+topData[5]+","+topData[6]+"]");
-			Bottom b = new Bottom(topData[0],topData[1],topData[2],Integer.parseInt(topData[3]),Integer.parseInt(topData[4]),topData[5],topData[6]);
-			BottomStock.put(topData[0], b);
+			Accessory ac = new Accessory(topData[0],topData[1],topData[2],Integer.parseInt(topData[3]),Integer.parseInt(topData[4]));
+			AcsryStock.put(topData[0], ac);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -62,13 +61,13 @@ public class BottomDao {
 	}
 	
 	public void showData() {
-		Set<String> kSet = BottomStock.keySet();
+		Set<String> kSet = AcsryStock.keySet();
 		Iterator<String> kItr = kSet.iterator();
 		
 		while(kItr.hasNext()) {
 			String tempKey = kItr.next();
-			Bottom tempB =BottomStock.get(tempKey);
-			System.out.println(tempB.toString());
+			Accessory tempAc =AcsryStock.get(tempKey);
+			System.out.println(tempAc.toString());
 		}
 	}
 }

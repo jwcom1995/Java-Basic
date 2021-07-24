@@ -5,17 +5,14 @@ public class Product {
 	private String pName;
 	private String price;
 	private String brand;
-	private String category;
 	private int stock;
 	
 	public Product() {}
 
-	public Product(String pName, String price, String brand, String category, int stock) {
-		super();
+	public Product(String pName, String price, String brand,  int stock) {
 		this.pName = pName;
 		this.price = price;
 		this.brand = brand;
-		this.category = category;
 		this.stock = stock;
 	}
 
@@ -43,13 +40,7 @@ public class Product {
 		this.brand = brand;
 	}
 
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
+	
 
 	public int getStock() {
 		return stock;
@@ -61,8 +52,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [pName=" + pName + ", price=" + price + ", brand=" + brand + ", category=" + category
-				+ ", stock=" + stock + "]";
+		return "Product [pName=" + pName + ", price=" + price + ", brand=" + brand + ", stock=" + stock + "]";
 	}
 	
 }
