@@ -69,7 +69,7 @@ public class ShoppingMallMenu {
 		if (productNum == 3) {
 			return Data;
 		}
-		System.out.print("성별: ");
+		System.out.print("성별 [ 1. All, 2. M , 3. W ]: ");
 		Data[5] = sc.next();
 		System.out.print("사이즈: ");
 		Data[6] = sc.next();

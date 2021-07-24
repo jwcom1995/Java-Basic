@@ -1,16 +1,17 @@
 package model.vo;
 
 public class Top extends Product{	
-	private String gender;
+	private String[] gender= {"All","M","W"};
+	private int genderNum;
 	private String size;
 	private String[] category= {"셔츠/블라우스","반팔티","긴팔티","후드티","맨투맨","니트"};
 	private int cateNum;
 	public Top() {}
 
-	public Top(String pName, String price, String brand, int cateNum, int stock, String gender, String size) {
+	public Top(String pName, String price, String brand, int cateNum, int stock, int genderNum, String size) {
 		super(pName,price,brand,stock);
 		this.cateNum=cateNum;
-		this.gender = gender;
+		this.genderNum = genderNum;
 		this.size = size;
 	}
 
@@ -20,12 +21,9 @@ public class Top extends Product{
 	}
 
 	public String getGender() {
-		return gender;
+		return gender[genderNum];
 	}
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
 
 	public String getSize() {
 		return size;
@@ -36,7 +34,7 @@ public class Top extends Product{
 	}
 	@Override
 	public String toString() {
-		return "["+super.getpName()+","+super.getPrice()+","+super.getBrand()+","+getCategory()+","+super.getStock()+","+gender+","+size+"]";
+		return "["+super.getpName()+","+super.getPrice()+","+super.getBrand()+","+getCategory()+","+super.getStock()+","+getGender()+","+size+"]";
 	}
 	
 }
