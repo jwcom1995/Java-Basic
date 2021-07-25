@@ -5,13 +5,14 @@ import java.util.Scanner;
 
 import controller.CustomerManager;
 import controller.ProductManager;
+import customer.Customer;
 import model.vo.Product;
 
 public class ShoppingMallMenu {
 	ProductManager pm = new ProductManager();
 	CustomerManager cm = new CustomerManager();
 	Scanner sc = new Scanner(System.in);
-
+	Customer logonUser;
 	public void mainMenu() {
 		boolean act = true;
 		pm.setData();
@@ -55,6 +56,8 @@ public class ShoppingMallMenu {
 			case 5:
 				System.out.println();
 				System.out.println("------[로그인]------");
+				login();
+				break;
 			case 7:
 				act=false;
 				break;
@@ -118,6 +121,7 @@ public class ShoppingMallMenu {
 	}
 	
 	public String[] inputCsData() {
+
 		String[] Data = new String[4];
 		String tempId,tempPw1,tempPw2 = "";
 		boolean check = true;
@@ -155,5 +159,21 @@ public class ShoppingMallMenu {
 		sc.nextLine();
 		Data[3]=sc.nextLine();
 		return Data;
+	}
+	
+	public void login() {
+		String id,pw="";
+		System.out.print("아이디 :");
+		id=sc.next();
+		System.out.print("비밀번호 :");
+		pw=sc.next();
+		if(cm.loginCheck(id, pw)==0) {
+			logonUser = cm.getCustomer(id);
+			System.out.println("로그인이 정상적으로 이루어졌습니다.");
+		} else if(cm.loginCheck(id, pw)==1) {
+			System.out.println("입력한 아이디는 존재하지 않습니다.");
+		} else {
+			System.out.println("입력한 아이디와 비밀번호가 일치하지 않습니다.");
+		}
 	}
 }

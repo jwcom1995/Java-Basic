@@ -73,4 +73,37 @@ public class CustomerDao {
 		}
 		return true;
 	}
+	
+	public boolean checkData(String id, String pwd) {
+		
+		Set<String> kSet = csList.keySet();
+		Iterator<String> kItr = kSet.iterator();
+
+		while (kItr.hasNext()) {
+			String tempKey = kItr.next();
+			if (tempKey.equals(id)) {
+				Customer c= csList.get(id);
+				if(c.getPwd().equals(pwd)) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public Customer getData(String id) {
+		Customer c = new Customer();
+		Set<String> kSet = csList.keySet();
+		Iterator<String> kItr = kSet.iterator();
+
+		while (kItr.hasNext()) {
+			String tempKey = kItr.next();
+			if (tempKey.equals(id)) {
+				c=csList.get(id);
+			}
+		}
+		return c;
+	}
 }

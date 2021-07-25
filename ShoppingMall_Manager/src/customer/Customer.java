@@ -6,14 +6,14 @@ import model.vo.Product;
 
 public class Customer {
 	private String id;
-	private String pw;
+	private String pwd;
 	private String name;
 	private String address;
 	private ArrayList<Product> shoppingList;
 	public Customer() {}
-	public Customer(String id, String pw, String name, String address) {
+	public Customer(String id, String pwd, String name, String address) {
 		this.id = id;
-		this.pw = pw;
+		this.pwd = pwd;
 		this.name = name;
 		this.address = address;
 	}
@@ -23,11 +23,11 @@ public class Customer {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getPw() {
-		return pw;
+	public String getPwd() {
+		return pwd;
 	}
-	public void setPw(String pw) {
-		this.pw = pw;
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
 	public String getName() {
 		return name;
@@ -46,7 +46,7 @@ public class Customer {
 	}
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", pw=" + pw + ", name=" + name + ", address=" + address + "]";
+		return "Customer [id=" + id + ", pwd=" + pwd + ", name=" + name + ", address=" + address + "]";
 	}
 	
 	
