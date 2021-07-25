@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -70,5 +71,19 @@ public class BottomDao {
 			Bottom tempB =BottomStock.get(tempKey);
 			System.out.println(tempB.toString());
 		}
+	}
+	
+	public ArrayList<Product> searchData(String word) {
+		Set<String> kSet = BottomStock.keySet();
+		Iterator<String> kItr = kSet.iterator();
+		ArrayList<Product> sData = new ArrayList<Product>(); 
+		
+		while(kItr.hasNext()) {
+			String tempKey = kItr.next();
+			if(tempKey.contains(word)) {
+				sData.add(BottomStock.get(tempKey));
+			}
+		}
+		return sData;
 	}
 }

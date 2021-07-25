@@ -1,7 +1,10 @@
 package controller;
 
+import java.util.ArrayList;
+
 import model.vo.AccessoryDao;
 import model.vo.BottomDao;
+import model.vo.Product;
 import model.vo.TopDao;
 
 public class ProductManager {
@@ -45,5 +48,23 @@ public class ProductManager {
 			default:
 				System.out.println("잘못된 값을 입력하였습니다.");
 		}
+	}
+
+	public ArrayList<Product> searchProduct(String word) {
+		ArrayList<Product> sData = new ArrayList<Product>();
+		
+		ArrayList<Product> temp=td.searchData(word);
+		for(int i = 0 ; i < temp.size() ; i++) {
+			sData.add(temp.get(i));
+		}
+		temp=bd.searchData(word);
+		for(int i = 0 ; i < temp.size() ; i++) {
+			sData.add(temp.get(i));
+		}
+		temp=ad.searchData(word);
+		for(int i = 0 ; i < temp.size() ; i++) {
+			sData.add(temp.get(i));
+		}
+		return sData;
 	}
 }

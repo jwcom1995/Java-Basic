@@ -6,13 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
 public class TopDao {
 	private HashMap<String,Top> topStock = new HashMap<>();
-	private String pNum="000000";
 	public void setData() {
 		BufferedReader br = null;
 		
@@ -70,5 +70,19 @@ public class TopDao {
 			Top tempT =topStock.get(tempKey);
 			System.out.println(tempT.toString());
 		}
+	}
+	
+	public ArrayList<Product> searchData(String word) {
+		Set<String> kSet = topStock.keySet();
+		Iterator<String> kItr = kSet.iterator();
+		ArrayList<Product> sData = new ArrayList<Product>(); 
+		
+		while(kItr.hasNext()) {
+			String tempKey = kItr.next();
+			if(tempKey.contains(word)) {
+				sData.add(topStock.get(tempKey));
+			}
+		}
+		return sData;
 	}
 }
