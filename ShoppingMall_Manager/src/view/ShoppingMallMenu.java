@@ -13,6 +13,7 @@ public class ShoppingMallMenu {
 	CustomerManager cm = new CustomerManager();
 	Scanner sc = new Scanner(System.in);
 	Customer logonUser;
+	
 	public void mainMenu() {
 		boolean act = true;
 		pm.setData();
@@ -62,6 +63,58 @@ public class ShoppingMallMenu {
 				act=false;
 				break;
 				
+			}
+		}
+	}
+	
+	public void loginMenu() {
+		boolean act = true;
+		pm.setData();
+		cm.setCsData();
+		while (act) {
+			System.out.println();
+			System.out.println("*** 쇼핑 관리 프로그램 ***");
+			System.out.println("1. 새 물품 추가");
+			System.out.println("2. 물품 차트");
+			System.out.println("3. 물품 검색");
+			System.out.println("4. 회원 정보");
+			System.out.println("5. 로그아웃");
+			System.out.println("7. 종료");
+			System.out.println("----------------------");
+			System.out.print("메뉴 번호 선택 : ");
+			int menuNum = sc.nextInt();
+			int productNum = 0;
+			switch (menuNum) {
+			case 1:
+				System.out.println();
+				System.out.println("------[새 물품 추가]------");
+				productNum = selectProduct();
+				pm.addProduct(productNum, inputData(productNum));
+				break;
+			case 2:
+				System.out.println();
+				System.out.println("------[물품 차트]------");
+				productNum = selectProduct();
+				pm.showProduct(productNum);
+				break;
+			case 3:
+				System.out.println();
+				System.out.println("------[물품 검색]------");
+				searchProduct();
+				break;
+			case 4:
+				System.out.println();
+				System.out.println("------[회원가입]------");
+				cm.addData(inputCsData());
+				break;
+			case 5:
+				System.out.println();
+				System.out.println("------[로그인]------");
+				login();
+				break;
+			case 7:
+				act=false;
+				break;				
 			}
 		}
 	}
