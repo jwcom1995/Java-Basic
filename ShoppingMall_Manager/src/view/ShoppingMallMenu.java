@@ -104,12 +104,16 @@ public class ShoppingMallMenu {
 				break;
 			case 4:
 				System.out.println();
+
 				System.out.println("------[회원정보]------");
+
 				cm.addData(inputCsData());
 				break;
 			case 5:
 				System.out.println();
+
 				System.out.println("------[로그아웃]------");
+
 				login();
 				break;
 			case 7:
