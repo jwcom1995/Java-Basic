@@ -2,6 +2,7 @@ package controller;
 
 import customer.Customer;
 import customer.CustomerDao;
+import model.vo.Product;
 
 public class CustomerManager {
 	CustomerDao cd = new CustomerDao();
@@ -20,7 +21,9 @@ public class CustomerManager {
 		cd.addData(data);
 	}
 	
-
+	public void addShoppingList(Product p) {
+		
+	}
 	public int loginCheck(String id, String pwd) {
 		// 아이디가 없는경우 1
 		// 비밀번호가 틀린경우 2
