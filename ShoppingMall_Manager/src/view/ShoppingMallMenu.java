@@ -1,6 +1,7 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import controller.CustomerManager;
@@ -13,7 +14,8 @@ public class ShoppingMallMenu {
 	CustomerManager cm = new CustomerManager();
 	Scanner sc = new Scanner(System.in);
 	Customer logonUser;
-	
+	LinkedList list;
+
 	public void mainMenu() {
 		boolean act = true;
 		pm.setData();
@@ -35,19 +37,64 @@ public class ShoppingMallMenu {
 			case 1:
 				System.out.println();
 				System.out.println("------[새 물품 추가]------");
-				productNum = selectProduct();
-				pm.addProduct(productNum, inputData(productNum));
+				boolean addAct = true;
+				while (addAct) {
+					productNum = selectProduct();
+					pm.addProduct(productNum, inputData(productNum));
+					System.out.print("계속 하시겠습니까?(Y/N) : ");
+					String answer = sc.next();
+					System.out.println();
+					if (answer.toUpperCase().equals("Y")) {
+						continue;
+					} else if (answer.toUpperCase().equals("N")) {
+						System.out.println("메인 메뉴로 돌아갑니다.");
+						addAct = false;
+					} else {
+						System.out.println("잘못된 값을 입력하였습니다.");
+					}
+				}
 				break;
 			case 2:
 				System.out.println();
 				System.out.println("------[물품 차트]------");
-				productNum = selectProduct();
-				pm.showProduct(productNum);
+
+				boolean showAct = true;
+				while (showAct) {
+					productNum = selectProduct();
+					list = pm.getProduct(productNum);
+					showProduct(list);
+					System.out.print("계속 하시겠습니까?(Y/N) : ");
+					String answer = sc.next();
+					System.out.println();
+					if (answer.toUpperCase().equals("Y")) {
+						continue;
+					} else if (answer.toUpperCase().equals("N")) {
+						System.out.println("메인 메뉴로 돌아갑니다.");
+						showAct = false;
+					} else {
+						System.out.println("잘못된 값을 입력하였습니다.");
+					}
+				}
 				break;
 			case 3:
 				System.out.println();
 				System.out.println("------[물품 검색]------");
-				searchProduct();
+
+				boolean searchAct = true;
+				while (searchAct) {
+					searchProduct();
+					System.out.print("계속 하시겠습니까?(Y/N) : ");
+					String answer = sc.next();
+					System.out.println();
+					if (answer.toUpperCase().equals("Y")) {
+						continue;
+					} else if (answer.toUpperCase().equals("N")) {
+						System.out.println("메인 메뉴로 돌아갑니다.");
+						searchAct = false;
+					} else {
+						System.out.println("잘못된 값을 입력하였습니다.");
+					}
+				}
 				break;
 			case 4:
 				System.out.println();
@@ -60,65 +107,9 @@ public class ShoppingMallMenu {
 				login();
 				break;
 			case 7:
-				act=false;
+				act = false;
 				break;
-				
-			}
-		}
-	}
-	
-	public void loginMenu() {
-		boolean act = true;
-		pm.setData();
-		cm.setCsData();
-		while (act) {
-			System.out.println();
-			System.out.println("*** 쇼핑 관리 프로그램 ***");
-			System.out.println("1. 새 물품 추가");
-			System.out.println("2. 물품 차트");
-			System.out.println("3. 물품 검색");
-			System.out.println("4. 회원 정보");
-			System.out.println("5. 로그아웃");
-			System.out.println("7. 종료");
-			System.out.println("----------------------");
-			System.out.print("메뉴 번호 선택 : ");
-			int menuNum = sc.nextInt();
-			int productNum = 0;
-			switch (menuNum) {
-			case 1:
-				System.out.println();
-				System.out.println("------[새 물품 추가]------");
-				productNum = selectProduct();
-				pm.addProduct(productNum, inputData(productNum));
-				break;
-			case 2:
-				System.out.println();
-				System.out.println("------[물품 차트]------");
-				productNum = selectProduct();
-				pm.showProduct(productNum);
-				break;
-			case 3:
-				System.out.println();
-				System.out.println("------[물품 검색]------");
-				searchProduct();
-				break;
-			case 4:
-				System.out.println();
 
-				System.out.println("------[회원정보]------");
-
-				cm.addData(inputCsData());
-				break;
-			case 5:
-				System.out.println();
-
-				System.out.println("------[로그아웃]------");
-
-				login();
-				break;
-			case 7:
-				act=false;
-				break;				
 			}
 		}
 	}
@@ -126,7 +117,7 @@ public class ShoppingMallMenu {
 	public String[] inputData(int productNum) {
 
 		String[] Data = new String[7];
-		
+
 		if (productNum == 1) {
 			System.out.print("카테고리 [1.셔츠/블라우스, 2.반팔티, 3.긴팔티, 4.후드티, 5.맨투맨, 6.니트]: ");
 			Data[3] = sc.next();
@@ -144,7 +135,7 @@ public class ShoppingMallMenu {
 		Data[0] = sc.nextLine();
 		System.out.print("가격: ");
 		Data[1] = sc.next();
-		
+
 		System.out.print("재고량: ");
 		Data[4] = sc.next();
 		if (productNum == 3) {
@@ -168,69 +159,74 @@ public class ShoppingMallMenu {
 		sc.nextLine();
 		String word = sc.nextLine();
 		ArrayList<Product> list = pm.searchProduct(word);
-		if(list.isEmpty()) {
-			System.out.println("해당 물품이 존재하지 않습니다.");			
+		if (list.isEmpty()) {
+			System.out.println("해당 물품이 존재하지 않습니다.");
 		} else {
-			for(int i = 0 ; i < list.size();i++) {
-				System.out.println("["+(i+1)+"]"+"\t"+list.get(i).toString());
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println("[" + (i + 1) + "]" + "\t" + list.get(i).toString());
 			}
 		}
 	}
-	
+
 	public String[] inputCsData() {
 
 		String[] Data = new String[4];
-		String tempId,tempPw1,tempPw2 = "";
+		String tempId, tempPw1, tempPw2 = "";
 		boolean check = true;
-		while(check) {
+		while (check) {
 			System.out.print("아이디 : ");
-			tempId=sc.next();
-			if(cm.checkDupId(tempId)) {
-				Data[0]=tempId;
+			tempId = sc.next();
+			if (cm.checkDupId(tempId)) {
+				Data[0] = tempId;
 				break;
-			}
-			else {
+			} else {
 				System.out.println("중복된 id가 존재합니다.");
 				System.out.println("다른 id를 입력해주세요.");
 			}
 		}
-		while(check) {
+		while (check) {
 			System.out.print("비밀번호 : ");
-			tempPw1=sc.next();
+			tempPw1 = sc.next();
 			System.out.print("비밀번호 재확인: ");
-			tempPw2=sc.next();
-			
-			if(tempPw1.equals(tempPw2)) {
-				Data[1]=tempPw1;
+			tempPw2 = sc.next();
+
+			if (tempPw1.equals(tempPw2)) {
+				Data[1] = tempPw1;
 				break;
-			}
-			else {
+			} else {
 				System.out.println("입력한 값이 서로 다릅니다.");
 				System.out.println();
 			}
 		}
 		System.out.print("이름 :");
-		Data[2]=sc.next();
+		Data[2] = sc.next();
 
 		System.out.print("주소 :");
 		sc.nextLine();
-		Data[3]=sc.nextLine();
+		Data[3] = sc.nextLine();
 		return Data;
 	}
-	
+
 	public void login() {
-		String id,pw="";
+		String id, pw = "";
 		System.out.print("아이디 :");
-		id=sc.next();
+		id = sc.next();
 		System.out.print("비밀번호 :");
-		pw=sc.next();
-		if(cm.loginCheck(id, pw)==0) {
+		pw = sc.next();
+		if (cm.loginCheck(id, pw) == 0) {
 			logonUser = cm.getCustomer(id);
 			System.out.println("로그인이 정상적으로 이루어졌습니다.");
-		} else if(cm.loginCheck(id, pw)==1) {
+		} else if (cm.loginCheck(id, pw) == 1) {
 			System.out.println("입력한 아이디는 존재하지 않습니다.");
 		} else {
 			System.out.println("입력한 아이디와 비밀번호가 일치하지 않습니다.");
+		}
+	}
+
+	public void showProduct(LinkedList list) {
+		for (int i = 0; i < list.size(); i++) {
+			System.out.print(i + "\t");
+			System.out.println(list.get(i));
 		}
 	}
 }

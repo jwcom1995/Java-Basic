@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class BottomDao {
 	private HashMap<String,Bottom> BottomStock = new HashMap<>();
-	private String pNum="000000";
+
 	public void setData() {
 		BufferedReader br = null;
 		
