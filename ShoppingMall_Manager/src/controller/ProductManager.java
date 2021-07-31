@@ -1,6 +1,10 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Set;
 
 import model.vo.AccessoryDao;
 import model.vo.BottomDao;
@@ -34,20 +38,29 @@ public class ProductManager {
 		}
 	}
 	
-	public void showProduct(int num) {
+	public LinkedList getProduct(int num) {
+		LinkedList listProduct=new LinkedList();
+		HashMap temp;
 		switch(num) {
 			case 1:
-				td.showData();
+				temp=td.getData();
 				break;
 			case 2:
-				bd.showData();
+				temp=bd.getData();
 				break;
 			case 3:
-				ad.showData();
+				temp=ad.getData();
 				break;
 			default:
 				System.out.println("잘못된 값을 입력하였습니다.");
+				return null;
 		}
+		Set kset =temp.keySet();
+		Iterator kitr = kset.iterator();
+		while(kitr.hasNext()) {
+			listProduct.add(kitr.next());
+		}
+		return listProduct;
 	}
 
 	public ArrayList<Product> searchProduct(String word) {

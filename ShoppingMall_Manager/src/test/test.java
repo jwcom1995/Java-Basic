@@ -8,7 +8,6 @@ public class test {
 	public static void main(String[] args) {
 		TopDao td = new TopDao();
 		td.setData();
-		td.showData();
 		Scanner sc = new Scanner(System.in);
 		String[] topData = new String[7];
 		System.out.print("제품명: ");
@@ -26,6 +25,5 @@ public class test {
 		System.out.print("사이즈: ");
 		topData[6]=sc.next();
 		td.addData(topData);
-		td.showData();
 	}
 }
