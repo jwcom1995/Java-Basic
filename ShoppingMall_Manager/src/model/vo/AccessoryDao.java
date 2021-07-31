@@ -61,15 +61,8 @@ public class AccessoryDao {
 		}
 	}
 	
-	public void showData() {
-		Set<String> kSet = AcsryStock.keySet();
-		Iterator<String> kItr = kSet.iterator();
-		
-		while(kItr.hasNext()) {
-			String tempKey = kItr.next();
-			Accessory tempAc =AcsryStock.get(tempKey);
-			System.out.println(tempAc.toString());
-		}
+	public HashMap<String,Accessory> getData() {
+		return AcsryStock;
 	}
 	
 	public ArrayList<Product> searchData(String word) {

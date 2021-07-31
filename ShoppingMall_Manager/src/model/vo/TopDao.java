@@ -61,15 +61,8 @@ public class TopDao {
 		}
 	}
 	
-	public void showData() {
-		Set<String> kSet = topStock.keySet();
-		Iterator<String> kItr = kSet.iterator();
-		
-		while(kItr.hasNext()) {
-			String tempKey = kItr.next();
-			Top tempT =topStock.get(tempKey);
-			System.out.println(tempT.toString());
-		}
+	public HashMap<String,Top> getData() {
+		return topStock;
 	}
 	
 	public ArrayList<Product> searchData(String word) {

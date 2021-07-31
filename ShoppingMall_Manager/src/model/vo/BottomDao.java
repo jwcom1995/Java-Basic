@@ -62,15 +62,8 @@ public class BottomDao {
 		}
 	}
 	
-	public void showData() {
-		Set<String> kSet = BottomStock.keySet();
-		Iterator<String> kItr = kSet.iterator();
-		
-		while(kItr.hasNext()) {
-			String tempKey = kItr.next();
-			Bottom tempB =BottomStock.get(tempKey);
-			System.out.println(tempB.toString());
-		}
+	public HashMap<String,Bottom> getData() {
+		return BottomStock;
 	}
 	
 	public ArrayList<Product> searchData(String word) {
