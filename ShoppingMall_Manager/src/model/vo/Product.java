@@ -40,7 +40,9 @@ public class Product {
 		this.brand = brand;
 	}
 
-	
+	public void deStock(int cnt) {
+		this.stock=this.stock-cnt;
+	}
 
 	public int getStock() {
 		return stock;
