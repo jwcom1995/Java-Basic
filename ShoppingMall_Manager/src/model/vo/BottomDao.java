@@ -79,4 +79,39 @@ public class BottomDao {
 		}
 		return sData;
 	}
+	
+	public void updateData() {
+		BufferedWriter bw = null;
+		try {
+			bw=new BufferedWriter(new FileWriter("BottomDB.txt"));
+			Set<String> kSet = BottomStock.keySet();
+			Iterator<String> kItr = kSet.iterator();
+			while(kItr.hasNext()) {
+				String k=kItr.next();
+				Bottom temp = BottomStock.get(k);
+				bw.write("["+temp.getpName()+","+temp.getPrice()+","+temp.getBrand()+","+temp.getCateNum()+","+temp.getStock()+","+temp.getGenderNum()+","+temp.getSize()+"]\n");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				bw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void sellProduct(String name, int count) {
+		int remainStock = BottomStock.get(name).getStock();
+		
+		if(remainStock-count < 0) {
+			System.out.println("재고량이 부족합니다. 올바른 수량을 입력해주세요.");
+		} else {
+			BottomStock.get(name).setStock(remainStock-count);
+			//달라진 수량을 db에적용
+			updateData();
+		}
+	}
+	
 }

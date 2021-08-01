@@ -28,7 +28,12 @@ public class Top extends Product{
 	public String getSize() {
 		return size;
 	}
-
+	public int getCateNum() {
+		return cateNum;
+	}
+	public int getGenderNum() {
+		return genderNum;
+	}
 	public void setSize(String size) {
 		this.size = size;
 	}

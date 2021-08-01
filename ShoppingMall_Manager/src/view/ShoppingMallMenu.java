@@ -13,8 +13,8 @@ public class ShoppingMallMenu {
 	ProductManager pm = new ProductManager();
 	CustomerManager cm = new CustomerManager();
 	Scanner sc = new Scanner(System.in);
-	Customer logonUser;
-	LinkedList list;
+	Customer logonUser=null;
+	ArrayList <Product> list;
 
 	public void mainMenu() {
 		boolean act = true;
@@ -26,8 +26,14 @@ public class ShoppingMallMenu {
 			System.out.println("1. 새 물품 추가");
 			System.out.println("2. 물품 차트");
 			System.out.println("3. 물품 검색");
-			System.out.println("4. 회원가입");
-			System.out.println("5. 로그인");
+			if(logonUser==null) {
+				System.out.println("4. 회원가입");
+				System.out.println("5. 로그인");
+			} else {
+				System.out.println("4. 회원정보");
+				System.out.println("5. 로그아웃");
+				
+			}
 			System.out.println("7. 종료");
 			System.out.println("----------------------");
 			System.out.print("메뉴 번호 선택 : ");
@@ -57,7 +63,7 @@ public class ShoppingMallMenu {
 			case 2:
 				System.out.println();
 				System.out.println("------[물품 차트]------");
-
+				list=null;
 				boolean showAct = true;
 				while (showAct) {
 					productNum = selectProduct();
@@ -97,14 +103,26 @@ public class ShoppingMallMenu {
 				}
 				break;
 			case 4:
-				System.out.println();
-				System.out.println("------[회원가입]------");
-				cm.addData(inputCsData());
+				if(logonUser==null) {
+					System.out.println();
+					System.out.println("------[회원가입]------");
+					cm.addData(inputCsData());
+				} else {
+					System.out.println();
+					System.out.println("------[회원정보]------");
+					csInfor();
+				}
 				break;
 			case 5:
-				System.out.println();
-				System.out.println("------[로그인]------");
-				login();
+				if(logonUser==null) {
+					System.out.println();
+					System.out.println("------[로그인]------");
+					login();
+				}  else {
+					System.out.println();
+					System.out.println("------[로그아웃]------");
+					logonUser=null;
+				}
 				break;
 			case 7:
 				act = false;
@@ -120,13 +138,13 @@ public class ShoppingMallMenu {
 
 		if (productNum == 1) {
 			System.out.print("카테고리 [1.셔츠/블라우스, 2.반팔티, 3.긴팔티, 4.후드티, 5.맨투맨, 6.니트]: ");
-			Data[3] = sc.next();
+			Data[3] = Integer.toString(sc.nextInt()-1);
 		} else if (productNum == 2) {
 			System.out.print("카테고리 [1.청바지, 2.반바지, 3.레깅스, 4.치마, 5.트레이닝복, 6.면바지]: ");
-			Data[3] = sc.next();
+			Data[3] = Integer.toString(sc.nextInt()-1);
 		} else if (productNum == 3) {
 			System.out.print("카테고리 [1.가방, 2.모자, 3.쥬얼리, 4.시계, 5.지갑]: ");
-			Data[3] = sc.next();
+			Data[3] = Integer.toString(sc.nextInt()-1);
 		}
 		System.out.print("브랜드: ");
 		Data[2] = sc.next();
@@ -213,20 +231,46 @@ public class ShoppingMallMenu {
 		id = sc.next();
 		System.out.print("비밀번호 :");
 		pw = sc.next();
-		if (cm.loginCheck(id, pw) == 0) {
+		if (cm.loginCheck(id,pw) == 0) {
 			logonUser = cm.getCustomer(id);
 			System.out.println("로그인이 정상적으로 이루어졌습니다.");
-		} else if (cm.loginCheck(id, pw) == 1) {
+		} else if (cm.loginCheck(id,pw) == 1) {
 			System.out.println("입력한 아이디는 존재하지 않습니다.");
 		} else {
 			System.out.println("입력한 아이디와 비밀번호가 일치하지 않습니다.");
 		}
 	}
 
-	public void showProduct(LinkedList list) {
+	public void showProduct(ArrayList<Product> list) {
 		for (int i = 0; i < list.size(); i++) {
-			System.out.print(i + "\t");
+			System.out.print("  ["+i+"]" + "\t");
 			System.out.println(list.get(i));
+		}
+		
+		System.out.println();
+		System.out.println("구매하고자 하는 품목의 번호와 수량을 입력해주세요.");
+		System.out.print("품목의 번호 : ");
+		int index=sc.nextInt();
+		System.out.print(((Product)(list.get(index))).getpName()+"의 수량 : ");
+		int count = sc.nextInt();
+		Product p = list.get(index);
+		p.setStock(count);
+		logonUser.addCart(p);
+		pm.sellProduct(list.get(index), count);
+	}
+	
+	public void csInfor() {
+		System.out.println("아이디 \t: "+logonUser.getId());
+		System.out.println("이름 \t: "+logonUser.getName());
+		System.out.println("주소 \t: "+logonUser.getAddress());
+		System.out.println("-----쇼핑 리스트----- ");
+		if(logonUser.getCart()==null) {
+			System.out.println("Empty");
+		} else {
+			ArrayList<Product> cart = logonUser.getCart();
+			for(int i = 0 ; i < cart.size(); i++) {
+				System.out.println("  ["+i+"]" + "\t"+cart.get(i));
+			}
 		}
 	}
 }

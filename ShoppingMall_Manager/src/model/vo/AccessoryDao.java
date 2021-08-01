@@ -88,7 +88,7 @@ public class AccessoryDao {
 			while(kItr.hasNext()) {
 				String k=kItr.next();
 				Accessory temp = AcsryStock.get(k);
-				bw.write("["+temp.getpName()+","+temp.getPrice()+","+temp.getBrand()+","+temp.getCategory()+","+temp.getStock()+"]\n");
+				bw.write("["+temp.getpName()+","+temp.getPrice()+","+temp.getBrand()+","+temp.getCateNum()+","+temp.getStock()+"]\n");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
