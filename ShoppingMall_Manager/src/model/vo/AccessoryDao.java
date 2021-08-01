@@ -79,4 +79,35 @@ public class AccessoryDao {
 		return sData;
 	}
 	
+	public void updateData() {
+		BufferedWriter bw = null;
+		try {
+			bw=new BufferedWriter(new FileWriter("AccessoryDB.txt"));
+			Set<String> kSet = AcsryStock.keySet();
+			Iterator<String> kItr = kSet.iterator();
+			while(kItr.hasNext()) {
+				String k=kItr.next();
+				Accessory temp = AcsryStock.get(k);
+				bw.write("["+temp.getpName()+","+temp.getPrice()+","+temp.getBrand()+","+temp.getCategory()+","+temp.getStock()+"]\n");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				bw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void sellProduct(String name, int count) {
+		int remainStock = AcsryStock.get(name).getStock();
+		
+		if(remainStock-count < 0) {
+			System.out.println("재고량이 부족합니다. 올바른 수량을 입력해주세요.");
+		} else {
+			AcsryStock.get(name).setStock(remainStock-count);
+		}
+	}
 }
