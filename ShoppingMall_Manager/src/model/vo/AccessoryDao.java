@@ -108,6 +108,8 @@ public class AccessoryDao {
 			System.out.println("재고량이 부족합니다. 올바른 수량을 입력해주세요.");
 		} else {
 			AcsryStock.get(name).setStock(remainStock-count);
+			//달라진 수량을 db에적용
+			updateData();
 		}
 	}
 }
