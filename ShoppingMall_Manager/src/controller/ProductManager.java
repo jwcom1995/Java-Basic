@@ -6,9 +6,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 
+import model.vo.Accessory;
 import model.vo.AccessoryDao;
+import model.vo.Bottom;
 import model.vo.BottomDao;
 import model.vo.Product;
+import model.vo.Top;
 import model.vo.TopDao;
 
 public class ProductManager {
@@ -38,8 +41,8 @@ public class ProductManager {
 		}
 	}
 	
-	public LinkedList getProduct(int num) {
-		LinkedList listProduct=new LinkedList();
+	public ArrayList getProduct(int num) {
+		ArrayList listProduct=new ArrayList();
 		HashMap temp;
 		switch(num) {
 			case 1:
@@ -58,11 +61,22 @@ public class ProductManager {
 		Set kset =temp.keySet();
 		Iterator kitr = kset.iterator();
 		while(kitr.hasNext()) {
-			listProduct.add(kitr.next());
+			listProduct.add(temp.get(kitr.next()));
 		}
 		return listProduct;
 	}
-
+	
+	public void sellProduct(Product p,int count) {
+		if(p instanceof Accessory) {
+			ad.sellProduct(p.getpName(), count);
+		} else if (p instanceof Top) {
+			td.sellProduct(p.getpName(), count);
+		} else if(p instanceof Bottom){
+			bd.sellProduct(p.getpName(), count);
+		} else {
+			System.out.println("입력값 오류");
+		}
+	}
 	public ArrayList<Product> searchProduct(String word) {
 		ArrayList<Product> sData = new ArrayList<Product>();
 		

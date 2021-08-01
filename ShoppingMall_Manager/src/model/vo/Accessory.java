@@ -15,6 +15,9 @@ public class Accessory extends Product {
 		return category[cateNum];
 	}
 
+	public int getCateNum() {
+		return cateNum;
+	}
 	
 	@Override
 	public String toString() {

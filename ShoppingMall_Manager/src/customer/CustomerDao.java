@@ -68,10 +68,10 @@ public class CustomerDao {
 		while (kItr.hasNext()) {
 			String tempKey = kItr.next();
 			if (tempKey.equals(id)) {
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	public boolean checkData(String id, String pwd) {

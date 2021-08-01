@@ -9,7 +9,7 @@ public class Customer {
 	private String pwd;
 	private String name;
 	private String address;
-	private ArrayList<Product> shoppingList;
+	private ArrayList<Product> shoppingList=new ArrayList<Product>();
 	public Customer() {}
 	public Customer(String id, String pwd, String name, String address) {
 		this.id = id;
@@ -43,6 +43,9 @@ public class Customer {
 	}
 	public void addCart(Product p) {
 		shoppingList.add(p);
+	}
+	public ArrayList<Product> getCart() {
+		return shoppingList;
 	}
 	@Override
 	public String toString() {
