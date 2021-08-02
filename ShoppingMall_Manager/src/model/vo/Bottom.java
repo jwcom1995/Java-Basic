@@ -39,6 +39,10 @@ public class Bottom extends Product{
 		this.size = size;
 	}
 	@Override
+	public Bottom clone() throws CloneNotSupportedException {
+		return (Bottom)super.clone();
+	}
+	@Override
 	public String toString() {
 		return "["+super.getpName()+","+super.getPrice()+","+super.getBrand()+","+getCategory()+","+super.getStock()+","+getGender()+","+size+"]";
 	}

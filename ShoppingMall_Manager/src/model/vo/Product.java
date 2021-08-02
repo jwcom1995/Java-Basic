@@ -1,6 +1,6 @@
 package model.vo;
 
-public class Product {
+public class Product implements Cloneable{
 	
 	private String pName;
 	private String price;
@@ -51,7 +51,9 @@ public class Product {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-
+	public Product clone() throws CloneNotSupportedException {
+		return (Product)super.clone();
+	}
 	@Override
 	public String toString() {
 		return "Product [pName=" + pName + ", price=" + price + ", brand=" + brand + ", stock=" + stock + "]";
