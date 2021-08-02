@@ -18,7 +18,10 @@ public class Accessory extends Product {
 	public int getCateNum() {
 		return cateNum;
 	}
-	
+	@Override
+	public Accessory clone() throws CloneNotSupportedException {
+		return (Accessory)super.clone();
+	}
 	@Override
 	public String toString() {
 		return "["+super.getpName()+","+super.getPrice()+","+super.getBrand()+","+getCategory()+","+super.getStock()+"]";

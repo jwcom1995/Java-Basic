@@ -13,26 +13,29 @@ public class ShoppingMallMenu {
 	ProductManager pm = new ProductManager();
 	CustomerManager cm = new CustomerManager();
 	Scanner sc = new Scanner(System.in);
-	Customer logonUser=null;
-	ArrayList <Product> list;
+	Customer logonUser = null;
+	ArrayList<Product> list;
 
-	public void mainMenu() {
+	public void mainMenu() throws CloneNotSupportedException {
 		boolean act = true;
+
+		System.out.println("시스템 접속중 입니다.");
 		pm.setData();
 		cm.setCsData();
+
 		while (act) {
 			System.out.println();
 			System.out.println("*** 쇼핑 관리 프로그램 ***");
 			System.out.println("1. 새 물품 추가");
 			System.out.println("2. 물품 차트");
 			System.out.println("3. 물품 검색");
-			if(logonUser==null) {
+			if (logonUser == null) {
 				System.out.println("4. 회원가입");
 				System.out.println("5. 로그인");
 			} else {
 				System.out.println("4. 회원정보");
 				System.out.println("5. 로그아웃");
-				
+
 			}
 			System.out.println("7. 종료");
 			System.out.println("----------------------");
@@ -63,7 +66,7 @@ public class ShoppingMallMenu {
 			case 2:
 				System.out.println();
 				System.out.println("------[물품 차트]------");
-				list=null;
+				list = null;
 				boolean showAct = true;
 				while (showAct) {
 					productNum = selectProduct();
@@ -99,14 +102,17 @@ public class ShoppingMallMenu {
 						searchAct = false;
 					} else {
 						System.out.println("잘못된 값을 입력하였습니다.");
+						System.out.println();
 					}
 				}
 				break;
 			case 4:
-				if(logonUser==null) {
+				if (logonUser == null) {
 					System.out.println();
 					System.out.println("------[회원가입]------");
 					cm.addData(inputCsData());
+					System.out.println();
+					System.out.println("회원가입이 완료되었습니다.");
 				} else {
 					System.out.println();
 					System.out.println("------[회원정보]------");
@@ -114,14 +120,14 @@ public class ShoppingMallMenu {
 				}
 				break;
 			case 5:
-				if(logonUser==null) {
+				if (logonUser == null) {
 					System.out.println();
 					System.out.println("------[로그인]------");
 					login();
-				}  else {
+				} else {
 					System.out.println();
 					System.out.println("------[로그아웃]------");
-					logonUser=null;
+					logonUser = null;
 				}
 				break;
 			case 7:
@@ -138,13 +144,13 @@ public class ShoppingMallMenu {
 
 		if (productNum == 1) {
 			System.out.print("카테고리 [1.셔츠/블라우스, 2.반팔티, 3.긴팔티, 4.후드티, 5.맨투맨, 6.니트]: ");
-			Data[3] = Integer.toString(sc.nextInt()-1);
+			Data[3] = Integer.toString(sc.nextInt() - 1);
 		} else if (productNum == 2) {
 			System.out.print("카테고리 [1.청바지, 2.반바지, 3.레깅스, 4.치마, 5.트레이닝복, 6.면바지]: ");
-			Data[3] = Integer.toString(sc.nextInt()-1);
+			Data[3] = Integer.toString(sc.nextInt() - 1);
 		} else if (productNum == 3) {
 			System.out.print("카테고리 [1.가방, 2.모자, 3.쥬얼리, 4.시계, 5.지갑]: ");
-			Data[3] = Integer.toString(sc.nextInt()-1);
+			Data[3] = Integer.toString(sc.nextInt() - 1);
 		}
 		System.out.print("브랜드: ");
 		Data[2] = sc.next();
@@ -180,8 +186,11 @@ public class ShoppingMallMenu {
 		if (list.isEmpty()) {
 			System.out.println("해당 물품이 존재하지 않습니다.");
 		} else {
+			System.out.println();
+			System.out.println(" INDEX\t\t제품명\t\t 종류\t 브랜드\t성별\t사이즈\t가격\t\t재고량");
+			System.out.println();
 			for (int i = 0; i < list.size(); i++) {
-				System.out.println("[" + (i + 1) + "]" + "\t" + list.get(i).toString());
+				System.out.println("[" + (i + 1) + "]" + "\t" +pm.printP(list.get(i)));
 			}
 		}
 	}
@@ -203,9 +212,9 @@ public class ShoppingMallMenu {
 			}
 		}
 		while (check) {
-			System.out.print("비밀번호 : ");
+			System.out.print("비밀번호 \t: ");
 			tempPw1 = sc.next();
-			System.out.print("비밀번호 재확인: ");
+			System.out.print("비밀번호 재확인\t: ");
 			tempPw2 = sc.next();
 
 			if (tempPw1.equals(tempPw2)) {
@@ -231,46 +240,75 @@ public class ShoppingMallMenu {
 		id = sc.next();
 		System.out.print("비밀번호 :");
 		pw = sc.next();
-		if (cm.loginCheck(id,pw) == 0) {
+		if (cm.loginCheck(id, pw) == 0) {
 			logonUser = cm.getCustomer(id);
 			System.out.println("로그인이 정상적으로 이루어졌습니다.");
-		} else if (cm.loginCheck(id,pw) == 1) {
+		} else if (cm.loginCheck(id, pw) == 1) {
 			System.out.println("입력한 아이디는 존재하지 않습니다.");
 		} else {
 			System.out.println("입력한 아이디와 비밀번호가 일치하지 않습니다.");
 		}
 	}
 
-	public void showProduct(ArrayList<Product> list) {
-		for (int i = 0; i < list.size(); i++) {
-			System.out.print("  ["+i+"]" + "\t");
-			System.out.println(list.get(i));
-		}
-		
+	public void showProduct(ArrayList<Product> list) throws CloneNotSupportedException {
 		System.out.println();
-		System.out.println("구매하고자 하는 품목의 번호와 수량을 입력해주세요.");
-		System.out.print("품목의 번호 : ");
-		int index=sc.nextInt();
-		System.out.print(((Product)(list.get(index))).getpName()+"의 수량 : ");
-		int count = sc.nextInt();
-		Product p = list.get(index);
-		p.setStock(count);
-		logonUser.addCart(p);
-		pm.sellProduct(list.get(index), count);
+		System.out.println(" INDEX\t\t제품명\t\t 종류\t 브랜드\t성별\t사이즈\t가격\t\t재고량");
+		System.out.println();
+		for (int i = 0; i < list.size(); i++) {
+			System.out.print("  [" + i + "]" + "\t");
+			System.out.println(pm.printP(list.get(i)));
+		}
+		// 고객에게 구매의사를 물어봄
+		System.out.println();
+		System.out.print("구매하고자 하는 상품이 있습니까? (Y/N) : ");
+		String answer = sc.next();
+		System.out.println();
+
+		if (answer.toUpperCase().equals("Y")) {
+			if (logonUser == null) {
+				System.out.println("로그인을 먼저 진행해주세요.");
+			} else {
+				System.out.println();
+				System.out.println("구매하고자 하는 품목의 번호와 수량을 입력해주세요.");
+				System.out.print("품목의 번호 : ");
+				int index = sc.nextInt();
+				System.out.print(((Product) (list.get(index))).getpName() + "의 수량 : ");
+				int count = sc.nextInt();
+				Product p = list.get(index).clone();
+				p.setStock(count);
+				logonUser.addCart(p);
+				pm.sellProduct(list.get(index), count);
+			}
+
+		} else if (answer.toUpperCase().equals("N")) {
+
+		} else {
+			System.out.println("잘못된 값을 입력하였습니다.");
+			System.out.println();
+		}
+
 	}
-	
+
 	public void csInfor() {
-		System.out.println("아이디 \t: "+logonUser.getId());
-		System.out.println("이름 \t: "+logonUser.getName());
-		System.out.println("주소 \t: "+logonUser.getAddress());
+		System.out.println("아이디 \t: " + logonUser.getId());
+		System.out.println("이름 \t: " + logonUser.getName());
+		System.out.println("주소 \t: " + logonUser.getAddress());
 		System.out.println("-----쇼핑 리스트----- ");
-		if(logonUser.getCart()==null) {
+		if (logonUser.getCart() == null) {
 			System.out.println("Empty");
 		} else {
 			ArrayList<Product> cart = logonUser.getCart();
-			for(int i = 0 ; i < cart.size(); i++) {
-				System.out.println("  ["+i+"]" + "\t"+cart.get(i));
+			int total = 0;
+			System.out.println();
+			System.out.println(" INDEX\t\t제품명\t\t 종류\t 브랜드\t성별\t사이즈\t가격\t\t재고량");
+			System.out.println();
+			for (int i = 0; i < cart.size(); i++) {
+				System.out.println("  [" + i + "]" + "\t" +pm.printP(cart.get(i)));
+				total += Integer.parseInt(cart.get(i).getPrice()) * cart.get(i).getStock();
 			}
+			System.out.println("-----------------------------");
+			System.out.println("  총 합계 : " + total + "원");
 		}
 	}
+
 }

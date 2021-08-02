@@ -103,11 +103,13 @@ public class TopDao {
 	
 	public void sellProduct(String name, int count) {
 		int remainStock = topStock.get(name).getStock();
-		
+		System.out.println("remainStock:"+remainStock);
+		System.out.println("count:"+count);
 		if(remainStock-count < 0) {
 			System.out.println("재고량이 부족합니다. 올바른 수량을 입력해주세요.");
 		} else {
 			topStock.get(name).setStock(remainStock-count);
+			System.out.println(remainStock-count);
 			//달라진 수량을 db에적용
 			updateData();
 		}

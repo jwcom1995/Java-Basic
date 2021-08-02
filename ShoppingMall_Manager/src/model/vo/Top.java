@@ -4,7 +4,7 @@ public class Top extends Product{
 	private String[] gender= {"All","M","W"};
 	private int genderNum;
 	private String size;
-	private String[] category= {"셔츠/블라우스","반팔티","긴팔티","후드티","맨투맨","니트"};
+	private String[] category= {"셔츠","반팔티","긴팔티","후드티","맨투맨","니트"};
 	private int cateNum;
 	public Top() {}
 
@@ -36,6 +36,10 @@ public class Top extends Product{
 	}
 	public void setSize(String size) {
 		this.size = size;
+	}
+	@Override
+	public Top clone() throws CloneNotSupportedException {
+		return (Top)super.clone();
 	}
 	@Override
 	public String toString() {
