@@ -190,7 +190,7 @@ public class ShoppingMallMenu {
 			System.out.println(" INDEX\t\t제품명\t\t 종류\t 브랜드\t성별\t사이즈\t가격\t\t재고량");
 			System.out.println();
 			for (int i = 0; i < list.size(); i++) {
-				System.out.println("[" + (i + 1) + "]" + "\t" +pm.printP(list.get(i)));
+				System.out.println("[" + (i + 1) + "]" + "\t" + pm.printP(list.get(i)));
 			}
 		}
 	}
@@ -203,12 +203,16 @@ public class ShoppingMallMenu {
 		while (check) {
 			System.out.print("아이디 : ");
 			tempId = sc.next();
-			if (cm.checkDupId(tempId)) {
-				Data[0] = tempId;
-				break;
+			if (tempId.length() < 6) {
+				System.out.println("id가 너무 짧습니다. 다시 입력해주세요.");
 			} else {
-				System.out.println("중복된 id가 존재합니다.");
-				System.out.println("다른 id를 입력해주세요.");
+				if (cm.checkDupId(tempId)) {
+					Data[0] = tempId;
+					break;
+				} else {
+					System.out.println("중복된 id가 존재합니다.");
+					System.out.println("다른 id를 입력해주세요.");
+				}
 			}
 		}
 		while (check) {
@@ -303,7 +307,7 @@ public class ShoppingMallMenu {
 			System.out.println(" INDEX\t\t제품명\t\t 종류\t 브랜드\t성별\t사이즈\t가격\t\t재고량");
 			System.out.println();
 			for (int i = 0; i < cart.size(); i++) {
-				System.out.println("  [" + i + "]" + "\t" +pm.printP(cart.get(i)));
+				System.out.println("  [" + i + "]" + "\t" + pm.printP(cart.get(i)));
 				total += Integer.parseInt(cart.get(i).getPrice()) * cart.get(i).getStock();
 			}
 			System.out.println("-----------------------------");
