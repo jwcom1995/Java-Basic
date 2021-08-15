@@ -92,7 +92,6 @@ public class ProductDao extends JDBCTemplate{
 		String sql = "INSERT INTO PRODUCT VALUES(?,?,?,?,?)";
 		
 		try {
-			con=getConnection();
 			pstm=con.prepareStatement(sql);
 			
 			pstm.setString(1, dto.getProduct_id());
@@ -107,7 +106,6 @@ public class ProductDao extends JDBCTemplate{
 			e.printStackTrace();
 		} finally {
 			close(pstm);
-			close(con);
 		}
 		
 		return rs;
@@ -121,7 +119,6 @@ public class ProductDao extends JDBCTemplate{
 		String sql = "UPDATE PRODUCT SET P_NAME=?, PRICE=?, DESCRIPTION=?, STOCK=? WHERE PRODUCT_ID=?";
 		
 		try {
-			con=getConnection();
 			pstm=con.prepareStatement(sql);
 			
 			pstm.setString(1, dto.getP_name());
@@ -136,7 +133,6 @@ public class ProductDao extends JDBCTemplate{
 			e.printStackTrace();
 		} finally {
 			close(pstm);
-			close(con);
 		}
 		
 		return rs;
@@ -150,7 +146,6 @@ public class ProductDao extends JDBCTemplate{
 		String sql = "DELETE FROM PRODUCT WHERE PRODUCT_ID=?";
 		
 		try {
-			con=getConnection();
 			pstm=con.prepareStatement(sql);
 			
 			pstm.setString(1, product_id);
@@ -161,7 +156,6 @@ public class ProductDao extends JDBCTemplate{
 			e.printStackTrace();
 		} finally {
 			close(pstm);
-			close(con);
 		}
 		
 		return rs;
