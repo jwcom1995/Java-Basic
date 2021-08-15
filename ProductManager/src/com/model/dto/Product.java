@@ -1,6 +1,7 @@
 package com.model.dto;
 
 public class Product {
+	
 	private String p_name;
 	private String product_id;
 	private String description;
@@ -60,8 +61,8 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [p_name=" + p_name + ", product_id=" + product_id + ", description=" + description + ", stock="
-				+ stock + ", price=" + price + "]";
+		return "Product [상품 아이디 : " + product_id + ", 상품명 : " + p_name + ", 가격 : " + price +", 상품설명 : " + description + ", 재고량 : "
+				+ stock +  "]";
 	}
 	
 	

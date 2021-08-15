@@ -41,7 +41,123 @@ public class ProductDao extends JDBCTemplate{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstm);
+			close(con);
 		}
 		return list;
+	}
+	
+	public Product selectOne(Connection con, String p_name) {
+		
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT * FROM PRODUCT WHERE P_NAME=?";
+		
+		Product p = new Product();
+	
+		try {
+			con=getConnection();
+			pstm=con.prepareStatement(sql);
+			
+			pstm.setString(1, p_name);
+			rs=pstm.executeQuery();
+			
+			while(rs.next()) {
+				p.setProduct_id(rs.getString(1));
+				p.setP_name(rs.getString(2));
+				p.setPrice(rs.getInt(3));
+				p.setDescription(rs.getString(4));
+				p.setStock(rs.getInt(5));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstm);
+			close(con);
+		}		
+		return p;
+	}
+	
+	public int insert(Connection con , Product dto) {
+		
+		PreparedStatement pstm = null;
+		int rs = 0;
+		
+		String sql = "INSERT INTO PRODUCT VALUES(?,?,?,?,?)";
+		
+		try {
+			pstm=con.prepareStatement(sql);
+			
+			pstm.setString(1, dto.getProduct_id());
+			pstm.setString(2, dto.getP_name());
+			pstm.setInt(3, dto.getPrice());
+			pstm.setString(4, dto.getDescription());
+			pstm.setInt(5, dto.getStock());
+			
+			rs=pstm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstm);
+		}
+		
+		return rs;
+	}
+	
+	public int update(Connection con, Product dto) {
+		
+		PreparedStatement pstm = null;
+		int rs = 0;
+		
+		String sql = "UPDATE PRODUCT SET P_NAME=?, PRICE=?, DESCRIPTION=?, STOCK=? WHERE PRODUCT_ID=?";
+		
+		try {
+			pstm=con.prepareStatement(sql);
+			
+			pstm.setString(1, dto.getP_name());
+			pstm.setInt(2, dto.getPrice());
+			pstm.setString(3, dto.getDescription());
+			pstm.setInt(4, dto.getStock());
+			pstm.setString(5, dto.getProduct_id());
+			
+			rs=pstm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstm);
+		}
+		
+		return rs;
+	}
+
+	public int delete(Connection con, String product_id) {
+		
+		PreparedStatement pstm = null;
+		int rs = 0;
+		
+		String sql = "DELETE FROM PRODUCT WHERE PRODUCT_ID=?";
+		
+		try {
+			pstm=con.prepareStatement(sql);
+			
+			pstm.setString(1, product_id);
+			
+			rs=pstm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstm);
+		}
+		
+		return rs;
 	}
 }
