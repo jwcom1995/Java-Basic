@@ -21,7 +21,7 @@ public class ProductController {
 		
 		String p_name;
 		
-		System.out.print("제품명을 입력하세요 : ");
+		System.out.print("상품명을 입력하세요 : ");
 		p_name=sc.nextLine();
 				
 		Product p = pBiz.selectOne(p_name);
@@ -55,7 +55,7 @@ public class ProductController {
 		description=sc.nextLine();
 		p.setDescription(description);
 		
-		System.out.print("재고 : ");
+		System.out.print("재고량 : ");
 		stock=Integer.parseInt(sc.nextLine());
 		p.setStock(stock);
 				
@@ -89,7 +89,7 @@ public class ProductController {
 		description=sc.nextLine();
 		p.setDescription(description);
 		
-		System.out.print("재고 : ");
+		System.out.print("재고량 : ");
 		stock=Integer.parseInt(sc.nextLine());
 		p.setStock(stock);
 				
