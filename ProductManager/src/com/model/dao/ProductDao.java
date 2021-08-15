@@ -141,4 +141,29 @@ public class ProductDao extends JDBCTemplate{
 		
 		return rs;
 	}
+
+	public int delete(Connection con, String product_id) {
+		
+		PreparedStatement pstm = null;
+		int rs = 0;
+		
+		String sql = "DELETE FROM PRODUCT WHERE PRODUCT_ID=?";
+		
+		try {
+			con=getConnection();
+			pstm=con.prepareStatement(sql);
+			
+			pstm.setString(1, product_id);
+			
+			rs=pstm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstm);
+			close(con);
+		}
+		
+		return rs;
+	}
 }
