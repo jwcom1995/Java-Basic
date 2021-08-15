@@ -41,7 +41,48 @@ public class ProductDao extends JDBCTemplate{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstm);
+			close(con);
 		}
 		return list;
 	}
+	
+	public Product selectOne(Connection con, String p_name) {
+		
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT * FROM PRODUCT WHERE P_NAME=?";
+		
+		Product p = new Product();
+	
+		try {
+			con=getConnection();
+			pstm=con.prepareStatement(sql);
+			
+			pstm.setString(1, p_name);
+			rs=pstm.executeQuery();
+			
+			while(rs.next()) {
+				p.setProduct_id(rs.getString(1));
+				p.setP_name(rs.getString(2));
+				p.setPrice(rs.getInt(3));
+				p.setDescription(rs.getString(4));
+				p.setStock(rs.getInt(5));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstm);
+			close(con);
+		}		
+		return p;
+	}
+	
+	
 }
