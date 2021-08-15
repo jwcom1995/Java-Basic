@@ -84,5 +84,32 @@ public class ProductDao extends JDBCTemplate{
 		return p;
 	}
 	
-	
+	public int insert(Connection con , Product dto) {
+		
+		PreparedStatement pstm = null;
+		int rs = 0;
+		
+		String sql = "INSERT INTO PRODUCT VALUES(?,?,?,?,?)";
+		
+		try {
+			con=getConnection();
+			pstm=con.prepareStatement(sql);
+			
+			pstm.setString(1, dto.getProduct_id());
+			pstm.setString(2, dto.getP_name());
+			pstm.setInt(3, dto.getPrice());
+			pstm.setString(4, dto.getDescription());
+			pstm.setInt(5, dto.getStock());
+			
+			rs=pstm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstm);
+			close(con);
+		}
+		
+		return rs;
+	}
 }
